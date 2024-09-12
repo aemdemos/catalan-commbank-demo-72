@@ -268,6 +268,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
+  decorateLinkedPictures(main);
   buildAutoBlocks(main);
   decorateSections(main);
   scheduleSections(main);
@@ -664,3 +665,17 @@ export function addAnchorLink(elem) {
 }
 
 loadPage();
+
+/**
+ * Decorates linked pictures in a given block.
+ * @param {HTMLElement} block - The block element containing the pictures.
+ */
+function decorateLinkedPictures(block) {
+  block.querySelectorAll('picture + br + a').forEach((a) => {
+    // remove br
+    a.previousElementSibling.remove();
+    const picture = a.previousElementSibling;
+    a.textContent = '';
+    a.append(picture);
+  });
+}
